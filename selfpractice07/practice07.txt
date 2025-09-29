@@ -1,0 +1,51 @@
+//24.09.2025
+//prompt 1 สรุปความสัมพันธ์ของ DOM แบบ tree ว่าแต่ละอันมีความสัมพันธ์เป็นอะไร
+สัปดาห๋นี้ได้เรียนเรื่อง DOM คือ โครงสร้างแบบต้นไม้ (tree structure) ที่เบราว์เซอร์สร้างขึ้นเพื่อแทนเอกสาร HTML ที่เรามีอยู่ คือเราสามารถใช้ JavaScript แก้ไข, ลบ, หรือเพิ่มสิ่งต่างๆ บนหน้าเว็บได้
+จากที่ได้ลอง console และความสัมพันธ์แล้วได้ว่า ใน root node  window.document และ document คือ ตัวแทนของเอกสาร HTML ทั้งหมด typeof document → "object" เพราะ document เป็น object ของ DOM
+document root node ของเว็บ ทุกอย่างอยู่ใต้ document สูงที่สุดใน DOM tree 
+document.documentElement → <html> element child ของ document เป็น root element ของ content
+<head> / <body> child ของ <html> อยู่ระดับรองลงมา
+element ภายใน <body> เช่น <h1>, <p>, <div> child ของ <body>
+text node / comment node leaf node (ไม่มี child) ตัวอักษร, ช่องว่าง, comment ใน HTML
+สรุป tree สูงที่สุด = document (root node) document.documentElement (<html>)  อยู่ล่างกว่า document ทุก element, text, comment อยู่ ใต้ <html>
+ได้เรียนรู้เรื่องใหม่ รู้จักว่า DOM คืออะไรและได้มองภาพรวมของการเรียน frontend ออกมากขึ้นและทำให้ได้ลองใช้ Js ในการเขียนหน้าเว็บ
+
+
+
+
+//25.09.2025
+//prompt 1 เลือก <h1> (หรือ element ที่มี id="title") เปลี่ยนข้อความ เปลี่ยนสีตัวอักษร และเปลี่ยนสีพื้นหลัง
+เริ่มด้วยการประกาศตัวแปร  const heading = document.getElementById คือการเลือก element <h1> ที่มี id="title" เก็บ element ไว้ในตัวแปร heading ต่อมาก็ใช้ heading.style.backgroundColor เพื่อเปลี่ยนพื้นหลังเป็นสีที่ต้องการและต่อมาก็ใช้ heading.textContent เพื่อเปลี่ยนข้อความใน <h1> 
+โจทย์ข้อนี้ได้รู้จักการใช้  document.getElementById ว่าเป็น เมธอดของ DOMใน JavaScript ใช้ ค้นหา element ในหน้าเว็บ ตาม id ของมัน และก็ได้รู้ว่า  heading.style.backgroundColor เอาไว้เปลี่ยนพื้นหลังและก็ใช้ .textContent เอาไว้แก้ข้อความ
+
+//prompt 2 เปลี่ยนสีใน Element <p> ตัวแรกให้เป็นสีม่วงและเปลี่ยนฟ้อนตัวอักษร
+เป็ฯการเปลี่ยน Element <p> ตัวแรกให้เป็นสีม่วงก็จะเริ่มจากประกาศตัวแปร const heading2 = document.getElementsByTagName("p"); คือการเลือกทุก <p> ในหน้า ได้ HTMLCollection แล้วเอาเก็บไว้ในตัวแปรที่สร้างคือ heading2และเราก็จะกำหนดเอา <p> ตัวแรก ก็จะเขียน heading2[0].style.color = "#483D8B"; และต่อมาก็จะเปลี่ยนฟ้อน heading2[0].style.fontFamily = "monospace";
+โจทย์ข้อนี้ก็ได้ลองการเปลี่ยนตัว element ตัวอื่นๆและได้ลองใช้ getElementsByTagName ว่าคือการเลือก element ที่ต้องการในทุกหน้า html และได้ลองการเขียนเอาแต่ <p> ตัวแรก คือเขียนแบบ [0] เป็นการบอกเอาแค่ตัวแรก และได้ลองเขียน .style.fontFamily คล้ายกับการเขียน CSS แต่อันนี้เขียนใน js
+
+//prompt 3 เพิ่ม Element <p> เข้าไปและเปลี่ยนสีตัวอักษรเป็นสีชมพู
+ต่อมาโจทย์ข้อนี้จะเป็นการสร้าง element <p> ขึ้นมาใหม่ ก็จะเริ่ม const heading3 = document.createElement("p"); คือสร้าง <p> ใหม่ใน memory ยังไม่แสดงบนหน้าเว็บ และต่อมาก็ใช้ .textContent เพื่อใส่ข้อความเข้าไปและต่อมาก็ใช้ .style.color เพื่อใส่สีตัวอักษร และต่อมาก็จะใส่ document.body.appendChild(heading3); เป็นการต่อ <p> เข้า body จะเห็นข้อความบนหน้าเว็บจะต่างจากการแแก้ <p>ในข้อที่แล้วที่ใช้ getElementsByTagName ที่มีมาให้อยู่แล้วใน html   แต่ถ้าเป็น createElement แบบในข้อนี้ จะเป็นการสร้าง element ขึ้นมาใหม่และต้องใช้ appendChild เพื่อแอดเข้าไปในหน้าเว็บ
+
+//prompt 4 เพิ่ม Element <p> เข้าไปและเปลี่ยนสีตัวอักษรเป็นสีเทาและทำให้ตัวอักษรเอียง
+ข้อนี้ก็จะเหมือนข้อที่แล้วใช้ const heading4 = document.createElement("p"); สร้าง <p> ใหม่ heading4.textContent ตั้งข้อความของ <p> heading4.style.color = "#708090";ใส่สีตัวอักษร  และจะมีการทำให้ข้อความเอียงโดยใช้  heading4.style.fontStyle = "italic"; 
+
+
+
+//27.09.2025
+//prompt 1 (โจทย์ในห้อง) สร้าง <p> ใหม่และต่อเข้า <div> เพิ่ม attribute format="italic" ให้ <p> สร้าง <p> ใหม่ 3 ตัว เพื่อลองเพิ่มข้อความด้วย innerHTML, innerText, textContent ต่อ <p> ทั้ง 3 ตัวเข้า <div> → เพื่อเปรียบเทียบว่า แต่ละวิธีแสดงข้อความ/HTML ต่างกันยังไง
+ก็จะเริ่มจากการเลือก <div> เป้าหมาย const demo = document.getElementById('demo'); เลือก <div> ที่มี id="demo" เก็บ element ไว้ในตัวแปร demo เอาไว้ใช้เพื่อเป็น container สำหรับเพิ่ม <p>ใหม่  ต่อมาสร้าง <p> ใหม่และต่อเข้า <div> const Pp = document.createElement('p'); demo.appendChild(Pp); createElement('p') → สร้าง <p> ใหม่ใน memory (ยังไม่แสดงบนหน้าเว็บ)และใช้ appendChild(Pp) ต่อ <p> เข้า <div id="demo"> ตอนนี้ <p> แสดงบนหน้าเว็บ แต่ยังไม่มีข้อความ
+เพิ่ม attribute ให้ <p>
+newp.setAttribute('format','italic');
+สร้าง <p> 3 ตัวเพื่อทดลองข้อความมี innerHTML,innerText,textContent
+const text1 = document.createElement('p');
+text1.innerHTML = "<i>Sample Italic Text</i>";
+const text2 = document.createElement('p');
+text2.innerText = "<i>Sample Italic Text</i>";
+const text3 = document.createElement('p');
+text3.textContent = "<i>Sample Italic Text</i>";
+ต่อ <p> ทั้ง 3 ตัวเข้า <div>
+demo.appendChild(text1);
+demo.appendChild(text2);
+demo.appendChild(text3);
+ก็จะได้ผลลัพธ์บนหน้าเว็บ:
+text1 ข้อความเอียง (<i> ถูก parse เป็น HTML) text2 <i> แสดงเป็นตัวอักษรธรรมดาและ text3 <i> แสดงเป็นตัวอักษรธรรมดา
+ข้อนี้ได้เรียนรูู้และได้ใช้  document.createElement('p') คือการสร้าง element ใหม่ การต่อ element เข้า DOM: appendChild() ให้แสดงบนหน้าเว็บและการเพิ่ม attribute: setAttribute('format','italic')  และได้รู็ความแตกต่างของ ข้อความใน element ว่า innerHTML คือแปลง HTML tag, สามารถใส่ <i>, <b> หรือ tag อื่นๆได้    innerText คือแสดงเป็นข้อความธรรมดา, ไม่ parse HTML และ textContent เหมือน innerText แต่รวมข้อความทั้งหมดใน node
