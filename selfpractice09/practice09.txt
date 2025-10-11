@@ -1,0 +1,50 @@
+# Lesson 3: DOM Events and Interaction
+Students will extend their quote manager by adding full interactivity with forms, buttons, and random quote functionality.  
+This lesson connects DOM manipulation with event handling to build a fully interactive app.
+## Objectives
+Students will
+- Use event listeners to respond to:
+  - Form submission (Add/Edit)
+  - Delete button click
+  - Random quote button click
+- Update the DOM when changes are made
+  This lesson connects the logic from **quote.js** with the user interface in **index.html** using **ui.js**.
+โจทย์ที่อาจาร์ยให้มา คือ สร้างหน้าเว็บ Quote Manager
+ผู้ใช้สามารถ:
+เพิ่มคำคม (content + author)
+แก้ไขคำคม
+ลบคำคม
+แสดงคำคมแบบสุ่ม และ ทุกคำคมมี id เพื่อแยกแยะ
+ข้อนี้ยากมากแต่ได้ฝึกการเขียน js บนหน้าเว็บได้เยอะ เริ่มจาก ประกาศตัวแปร let quotes = []; เก็บ array ของ quote objects และ ดึง element ต่าง ๆ จาก DOM เพื่อใช้งานquoteList → container แสดงคำคม
+form → ฟอร์มเพิ่ม/แก้ไขคำคม  contentInput / authorInput → ช่องกรอกข้อความ   idInput → ซ่อน id เวลาแก้ไข  randomBtn → ปุ่มโชว์คำคมสุ่ม  และ randomDisplay → แสดงคำคมสุ่ม และต่อมาก็สร้าง  element สำหรับ quote
+function createQuoteElement(quote) { ... }  คือ สร้าง <div> ใหม่สำหรับคำคมแต่ละอัน และใส่ data-id เพื่อระบุ id ของ quote แล้วสร้าง <p> สำหรับ content และ author  สร้างปุ่ม Edit และ DeleteEvent ปุ่ม Edit:
+กดแล้วเอาค่า quote ไปใส่ฟอร์ม เพื่อแก้ไข Delete: ลบ <div> ใน DOM และลบ quote ใน array และต่อมาก็ เพิ่ม quote ใน DOM แล้วก็ประกาศ function อัปเดต quote ใน DOM และก็ประกาศ function ลบ quote จาก DOM แล้วก็มี function renderQuotes() คือประกาศ quote ทั้งหมดและก็ function showRandomQuote() คือแสดง quote แบบสุ่ม ต่อมาก็จะ สร้าง ฟอร์ม submit เพิ่ม/แก้ไข quote  แล้วก็ ผูกปุ่มโชว์ random
+randomBtn.addEventListener("click", showRandomQuote); กดปุ่ม  คือเรียกฟังก์ชัน showRandomQuote
+ข้อนี้ได้ทำอะไรเยอะมากทั้งใช้ DOM ดึงขอมูล แสดงคำคม, ปุ่มแก้ไข, ปุ่มลบ, ปุ่มสุ่ม ใช้ event  Submit form → เพิ่ม/แก้ไข , Click Edit → ดึงค่ามาใส่ฟอร์ม , Click Delete → ลบจาก DOM + array และ Click Random → แสดง quote แบบสุ่ม ใช้ event เพื่อให้เกิด action ต่างๆ ทำให้ได้ฝึกเยอะมากและได้ความรู้เกี่ยกับการทำหน้าเว็บกับ js เยอะมาก
+
+
+//9.10.2025
+//prompt 1: กด Enter แล้ว log ค่าใน console
+สัปดาห์นี้ได้เรียนเรื่อง event ก็คือเป็นสิ่งที่เราจะคลิกหรือกดอะไรบนหน้าเว็บแล้วจะมีข้อความขึ้นมาหรือ input ที่ได้เราก็จะนำไปทำอะไรต่อไป เราก็จะใช้ js ทำงาน เช่น เปลี่ยนข้อความ, validate form, หรือ alert
+ข้อแรกก็เป็นการนำ input ที่กด enter/submit ไปใส่ใน console ที่อยู่หน้าเว็บ ก็จะเริ่ม const inputMessage = document.getElementById("inputMessage"); คือดึง  input ที่มี id="inputMessage" จากหน้าเว็บมาแล้วก็ inputMessage.addEventListener("keyup", (event) => { ... }); ผูก event listener ให้กับ inputMessage แล้วใช้ "keyup" event ตรวจสอบทุกครั้งที่ผู้ใช้ปล่อยปุ่มหลังพิมพ์แล้วก็ใช้ if (event.key === "Enter")
+ตรวจสอบว่าผู้ใช้กดปุ่ม Enter หรือไม่  แล้วถ้ากด Enter ก็จะแสดงค่าที่กรอกใน console   console.log(event.target.value);
+ข้อนี้ได้ฝึกใช้  keyup event แล้วได้รู็ว่ามันคืออะไรแล้วใช้ตอนไหนแล้วก็ได้ฝึกใช้  event.target.value เพื่อดึงค่าจาก element
+
+//prompt 2: เมื่อผู้ใช้ คลิกออกจากช่องชื่อ (fname หรือ lname) ถ้าว่าง จะแสดงข้อความว่า Please enter your (fname หรือ lname) เป็นสีแดง
+ข้อ 2 ก็คือจะเช็คว่ากรอกชื่อมั้ย ไม่ให้เป็นค่าว่าง เริ่มประกาศ function validateInput(e) รับ event object เป็น parameter แล้วก็ประกาศ const value = e.target.value.trim();  อ่านค่าจาก inputและใช้ trim ตัดช่องว่าง และใช้ if (value.length === 0)  คือถ้า input ว่าง  แสดงข้อความแดงก็ใช้ message.style.color = "red"; และใช้ message.textContent = ... แสดงข้อความว่า Please enter your fname หรือ lname
+ข้อนี้ได้ใช้ method trim เพื่อตัดช่องว่างและได้ฝึกตรวจ input ว่าเป็นยังไง และได้ใช้ .style เปลี่ยนสีเปลี่ยนข้อความ
+
+//prompt 3: ห้ามมีตัวเลขหรือสัญลักษณ์ใน (fname หรือ lname)
+ข้อนี้ก็จะให้ตรวจสอบห้ามมีตัวเลขหรือสัญลักษณ์ต่างๆในชื่อและนามสกุล ก็จะใช้ /[^a-zA-Z]/.test(value) ตัวนี้คือ Regular Expression แบบสั้น ๆ ใช้ตรวจสอบ pattern ของข้อความ  ใช้ตรวจว่ามี ตัวที่ไม่ใช่ตัวอักษร A–Z หรือ a–z ถ้ามี  คืนค่า true
+แล้วก็ให้บอกข้อความเป็นสีแดงก็จะใช้  message.style.color = "red"; แล้วก็ให้ข้อความเตือน message.textContent = ... แสดงข้อความเตือนว่า “กรอกได้เฉพาะตัวอักษรเท่านั้น”
+ข้อนี้ได้ฝึกใช้ Regular Expression แบบใหม่ๆ และได้รู้ว่ามันหมายความว่ายังไง และได้ใช้ if ใช้ DOM
+
+
+//11.10.2025
+//prompt 4: ถ้าทั้ง fname และ lname กรอกข้อมูลถูกต้องครบถ้วนแล้วให้เด้งข้อความขึ้นมาว่า "It's done"
+ข้อนี้ก็จะให้แสดงเด้งขึ้นมาหน้าเว็บว่าเสร็จแล้ว ก็จะใช้ alert event ในการทำให้ข้อความเด้งขึ้นมาบนหน้าเว็บเหมือนการเขียน css เริ่มด้วยใช้ if fName.value.trim().length > 0 && lName.value.trim().length > 0 เช็คว่าทั้งสองช่องมีค่า ไม่ว่าง ก็ให้ .length > 0 คือ length หรือตัวอักษรต้องมากกว่า 0 แล้วก็ใช้   Regular Expression   /^[a-zA-Z]+$/.test(fName.value.trim()) && /^[a-zA-Z]+$/.test(lName.value.trim())   ตรวจว่าทั้งสองช่องเป็น ตัวอักษรล้วน   ตัวนี้คือ ^ ... $ → ทั้ง string ต้องตรง pattern  และ + คือมีอย่างน้อย 1 ตัว ต่อมาก็ใช้ alert event alert("It's done");   ถ้าเงื่อนไขครบ  แสดงข้อความว่า "It's done"   alert จะต่างจาก prompt ตรงที่ alert ก็จะแสดงข้อความขึ้นมาเฉยๆ แต่ prompt ก็จะแสดงข้อความพร้อมมีช่องให้กรอกด้วยเหมาะกับใช้เป็นการถามคำถาม ต่อมาก็ใช้  fName.addEventListener("blur", validateInput);  ผูก event blur ให้ fname และ lName.addEventListener("blur", validateInput);  ผูก event blur ให้ lname  lName element <input> ของนามสกุล   .addEventListener("blur", ...)  ผูก event listener ให้ element นี้ blur ก็คือประเภท event ที่เราต้องการฟัง (คือคลิกออกจาก input)
+ข้อนี้ได้ฝึก ตรวจหลายเงื่อนไขพร้อมกัน, logical AND, และได้ลองใช้ alert message เป็น event ที่แสดงข้อความบนหน้าเว็บ และได้ใช้ Regular Expression  เปรียบเทียบและเช็ค input
+
+
+
+

@@ -1,0 +1,38 @@
+# Lesson 2: DOM Manipulation # Objective Students will practice manipulating the DOM with JavaScript by displaying and interacting with quotes. This lesson connects the logic from **quote.js** with the user interface in **index.html** using **ui.js**. --- # Your Tasks - Use getAllQuotes() to retrieve the current list of quotes. - call addNewQuote(content, author) to add 3 initial quotes by calling addQuote(content, author) from **quote.js**. - addQuote('Stay hungry, stay foolish.', 'Steve Jobs') - addQuote('Do or do not. There is no try.', 'Yoda') - addQuote('Simplicity is the ultimate sophistication.', 'Leonardo da Vinci') - Write a function renderQuotes() that handles this process. - Clears the current contents of the quote list. - Loop through each quote and create a <p> element with the format: "content" — author to the <div id="quote-list">. - Each quote should include its content and author. - Call renderQuotes() after adding initial quotes.
+โจทย์ที่อาจาร์ยให้เรา สิ่งที่โจทย์ให้ทำคือ 
+1 	ดึงคำคมทั้งหมดจาก quote.js (getAllQuotes())
+2	เพิ่มคำคมเริ่มต้น 3 อัน (addQuote ผ่าน addNewQuote)
+3	สร้าง renderQuotes() เพื่อแสดงคำคมบนหน้าเว็บ
+4	เรียก renderQuotes() หลังจากเพิ่มคำคม
+เริ่มแรกเราก็จะทำในไฟล์ ui.js import { addQuote, getAllQuotes } from "./quote.js"  ใช้ import เพื่อเรียกฟังก์ชันจากไฟล์ quote.js  addQuote() คือเพิ่มคำคม และใช้ getAllQuotes() เพื่อดึง array ของคำคมทั้งหมด
+แลัวก็ ประกาศตัวแปร let quotes = []; เพื่อเก็บ คำคมทั้งหมดที่ได้จาก getAllQuotes() แล้วก็ เลือก <div> ใน HTML ที่จะแสดงคำคม  const quoteList = document.getElementById("quote-list");  คือ quoteList ชี้ไปที่ <div id="quote-list"> เอา id quote-list แล้วใช้ appendChild() เพิ่ม <p> ของคำคมเข้าไป แล้วก็สร้างฟังก์ชัน renderQuotes() const quoteList = document.getElementById("quote-list");  คือเลือก <div> ที่จะแสดงคำคม  ต่อมาเป็น quoteList.innerHTML = "";  เพื่อเคลียร์ข้อความเก่าออกก่อน เพื่อไม่ให้ซ้ำ และต่อมาก็ประกาศตัวแปรเพื่อดึง array คำคมท้ังหมดจาก quote.js const quotes = getAllQuotes(); และใช้  for (const q of quotes) วนลูปผ่านทุกคำคม สร้าง <p> และใส่ข้อความ "content" — author document.createElement("p") + p.textContent = ... และเพิ่ม เพิ่ม <p> ลงในหน้าเว็บ แล้วก็สร้าง addNewQuote(content, author) เพื่อเรียก addQuote()add ข้อความใหม่แล้วก็ addNewQuote add คำคมเริ่มต้นตามโจทย์ 3 ข้อ แล้วก็เรียกฟังก์ชันเพื่อสร้าง <p> และแสดงคำคมใน <div id="quote-list">   renderQuotes();
+ข้อนี้ยากแต่ได้ฝึกอะไรเยอะเช่น ได้ฝึกการใช้  getAllQuotes() คือการดึงข้อมูล และ renderQuotes() คือการแสดงข้อมูล และรู้จักการเลือก element อื่นๆ เช่น document.getElementById("quote-list") ได้ฝึกสร้าง element ใหม่ และใส่ข้อความ document.createElement("p") และ p.textContent = ...   และเพิ่ม element ลงใน DOM ใช้ appendChild(p) และได้รู้วิธี ล้าง element ก่อนแสดงผลใหม่  quoteList.innerHTML = "" 
+
+
+//2.10.2025
+// Prompt 1: แสดงทุก child ของ soup
+ข้อนี้จะเป็นการเลือก child ของ id soup เริ่มประกาศตัวแปรก่อนให้ let soup = document.querySelector("#soup").firstElementChild; หมายความว่า querySelector("#soup") คือเลือก <ul id="soup"> เพราะ querySelector เป็น method ใน DOM คือเลือก element ตัวแรกในหน้าเว็บที่ตรงกับตัวเลือก (วงเล็บหลัง selector คือให้เราเขียนว่าเราจะเลือก element อะไร ) ที่เรากำหนด # ตัวนี้คือเลือก id ที่มีอยู่ถ้า .จะเป็นการเลือก class แต่ถ้าไม่ใส่อะไรข้างหน้าจะเป็นการเลือก tag name ที่เราเขียน ข้อนี้ก็ใช้  "#soup" เพราะ soup เป็น id ต่อมาก็ใช้ .firstElementChild คือเลือกลูกตัวแรกและต่อมาก็ใช้ while เพื่อวนลูปแล้วใช้  soup.nextElementSibling  เพื่อไปลูกถัดไปแสดงให้ครบทุก child
+ข้อนี้ก็ได้รู้จักและลองใช้ method ใหม่ๆ ของ DOM และยังได้ฝึกเขียน DOM และรู้จักพวก # . ว่าหมายถึงอะไร
+
+// Prompt 2: เลือก element แรกที่เจอจาก id soup หรือ appetizer และแสดงทุก element ที่มี class .meat
+ข้อนี้ก็จะเป็นการให้แสดงสิ่งที่เจอก่อนก็จะเขียน const frist = document.querySelector("#soup") || document.querySelector("#appetizer"); หมายความว่าประกาศตัวแปรที่จะนำไปใช้ก่อนแล้ว ก็ใช้ querySelector เลือก element เราก็จะใส่ || คือตัวหรือ หมายความว่าถ้าเรา #soup หรือ #appetizer ก่อนก็ให้แสดงอันนั้น แล้วต่อมาก็ใช้  querySelectorAll คือเอาทุก element  ก็จะให้ querySelectorAll(".meat")  คือเลือกทุก <li> ที่มี class meat แล้วก็ใช้ forEach แสดง element ทีละตัว
+ข้อนี้ก็ได้ลองใช้ method ใหม่ คือ querySelectorAll ก็จะเป็นการเลือกทุก element ที่เรากำหนด ต่างจาก querySelector ที่เลือก element แรกที่เรากำหนดเจอและก็ได้ใช้ || ได้ฝึกกลับมาใช้อีกครั้ง แล้วก็ได้ใช้ forEach 
+
+
+//3.10.2025
+//prompt 1: เปลี่ยนสีเมนูตามประเภท เลือกทุก <li> ใน <ul> ถ้า class เป็น vegan → เปลี่ยนสีข้อความเป็น green ถ้า class เป็น meat → เปลี่ยนสีข้อความเป็น red
+เรื่มด้วยประกาศตัวแปร document.querySelectorAll("ul li") คือเลือก ทุก <li> ใน <ul> และก็ใช้ forEach วนลูป <li> ทุกตัว ต่อมาเราจะตรวจสอบว่า element มี class "vegan" หรือไม่ ก็จะใช้ li.classList.contains("vegan")
+และถ้าใช่  เปลี่ยนสีเป็น green  ก็จะเขียนแบบนี้   li.style.color = "green";  ต่อมาเป็นการเช็ค class meat ใช้ else if (li.classList.contains("meat")) แล้วถ้ามีก็จะเปลี่ยนเป็นสีแดง  li.style.color = "red";
+ข้อนี้ได้ฝึกใช้ classList.contains คือเอาไว้ตรวจว่ามี element นั้นอยู่หรือไม่ และได้ใช้ style เปลี่ยนสี ใช้ if-else เพื่อบอกเงื่อนไข
+
+//prompt 2: นับจำนวนเมนูแต่ละประเภท เลือกทุก <li> ใน <ul> ทั้งหมด นับว่าในหน้าเว็บมี meat กี่ตัว และ vegan กี่ตัว
+ข้อนี้ก็จะเปลี่ยนเหมืแนการเขียนโค้ดนับตัวอักษร เริ่มประกาศตัวแปรนับจำนวน meatCount และ veganCount เอาไว้เก็บจำนวนที่นับ ต่อมาก็ใช้ forEach วนลูป <li> ทุกตัวแล้วก็ใช้  classList.contains ที่เอาไว้ตรวจว่ามี element นั้นอยู่หรือไม่
+ตรวจสอบ class ถ้า "meat" → เพิ่ม meatCount ถ้า "vegan" → เพิ่ม veganCount แล้วก็แสดงผลใน console
+ข้อนี้ได้ฝึกใช้การนับ element ตามเงื่อนไขและ  classList.contains ใน loop
+
+
+//4.10.2025
+//prompt 3: เพิ่มเมนูใหม่ สร้าง <li> ใหม่  และเพิ่มลงใน <ul id="soup"> ให้ชื่อเมนูใหม่เป็น "Tom Yum Soup" และ class เป็น "meat"
+ข้อนี้เป็นการเพื่มข้อมูลใหม่ ก็จะใช้ document.createElement("li")  เป็นการสร้าง <li> ใหม่ใน memory และก็จะใส่ความใหม่ ใช้ newItem.textContent = "Tom Yum Soup"; คือการใส่ข้อความให้ <li>
+และก็กำหนด class ในกับ element newItem.className = "meat"; สุดท้ายก็จะเพิ่มข้อมูลเข้าไปใช้  appendChild เพื่อให้ element ปรากฏบนหน้าเว็บ  ก็จะเขียนแบบนี้ soup.appendChild(newItem);
+
