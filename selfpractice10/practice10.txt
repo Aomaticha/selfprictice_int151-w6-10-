@@ -1,0 +1,87 @@
+practice10
+//15.10.2025
+//prompt 1: โจทย์ในห้อง
+เริ่มที่โจทย์ในห้องที่อาจาร์ญให้เขียนหน้าเว็บแล้วเปลี่ยนสีพื้นหลังและสีตัวอักษรแล้วมีข้อความเด้งมาเมื่อเรา save แล้ว และให้เป็นแบบ localStorage คือให้อยู่ตลอดเปิดมาก็ยังมีข้อมูลที่เรากรอกไว้อยู่
+เริ่มด้วยโหลดค่าที่บันทึกไว้ (localStorage)  document.addEventListener("DOMContentLoaded", () => {
+  const savedBg = localStorage.getItem("bgColor");
+  const savedFont = localStorage.getItem("fontColor");
+  const savedSize = localStorage.getItem("fontSize");
+  const savedName = localStorage.getItem("userName");   DOMContentLoaded รอให้หน้าเว็บโหลดเสร็จก่อนถึงจะเริ่มทำงาน   และ localStorage.getItem("...") คือดึงค่าที่เคยบันทึกไว้ใน browser
+เช่น สีพื้นหลัง, สีตัวอักษร, ขนาดฟอนต์, และชื่อผู้ใช้
+และถ้าเรามีค่าที่เคย ที่บันทึกไว้แล้ว ให้แสดงผล  เอาค่านั้นมาใช้ตั้งค่าหน้าเว็บทันที เช่น background, สีตัวอักษร และขนาด font
+  if (savedBg) document.body.style.backgroundColor = savedBg;
+  if (savedFont) document.body.style.color = savedFont;
+  if (savedSize) applyFontSize(savedSize);
+ต่อมาเราก็จะใส่ค่าที่บันทึกไว้กลับเข้าใน <input> เพื่อให้ในช่องกรอก <input> แสดงค่าที่เคยเลือกไว้ตอนกลับเข้ามาในเว็บ
+  if (savedBg) document.getElementById("bgColor").value = savedBg;
+  if (savedFont) document.getElementById("fontColor").value = savedFont;
+  if (savedSize) document.getElementById("fontSize").value = savedSize; 
+
+//prompt 2: ให้เพิ่มการกรอกชื่อผู้ใช้แล้วให้แสดงเป็นข้อความตามที่กรอกว่า Hello (name) และพอเรากลับมาหน้าเดิมให้ขึ้นข้อความว่า Welcome back (name)
+ต่อมาเป็นส่วนของการกรองชื่อ ถ้ามีชื่อผู้ใช้อยู่แล้วให้แสดงข้อความว่ายินดีต้อนรับกลับมา 
+  if (savedName) {
+    document.getElementById("userName").value = savedName;
+    alert(`Welcome back, ${savedName}!`);}
+});
+ต่อมาก็เป็นส่วนฟังก์ชันเปลี่ยนขนาดฟอนต์
+function applyFontSize(size) {
+  if (size === "small") document.body.style.fontSize = "14px";
+  else if (size === "medium") document.body.style.fontSize = "18px";
+  else if (size === "large") document.body.style.fontSize = "22px";
+}
+ฟังก์ชันนี้จะถูกเรียกเวลาเลือก font size และใช้ปรับขนาดตัวอักษรในหน้าเว็บ
+ต่อมาก็ปุ่ม save บันทึกการตั้งค่า เมื่อคลิกปุ่ม Save → ดึงค่าจาก input ทั้งหมดมาเก็บในตัวแปร
+document.getElementById("saveBtn").addEventListener("click", () => {
+  const bgColor = document.getElementById("bgColor").value;
+  const fontColor = document.getElementById("fontColor").value;
+  const fontSize = document.getElementById("fontSize").value;
+  const usrname = document.getElementById("userName").value;
+และเอาข้อมูลบันทึกลง localStorage และแสดงข้อความทักทาย "Hello ชื่อ" ถ้าคนที่พึ่งเข้ามาหนาเว็บครั้งแรก
+  localStorage.setItem("bgColor", bgColor);
+  localStorage.setItem("fontColor", fontColor);
+  localStorage.setItem("fontSize", fontSize);
+  localStorage.setItem("userName", usrname);
+    alert(`Hello ${usrname}`);
+ถ้ามีกด save จะใช้ค่าใหม่กับหน้าเว็บทันที หลังจากกด save รอ 0.5 วินาทีแล้วอัปเดตสีและขนาด font บนหน้าเว็บ
+  setTimeout(() => {
+    document.body.style.backgroundColor = bgColor;
+    document.body.style.color = fontColor;
+    applyFontSize(fontSize);
+  }, 500);
+});
+ข้อนี้ได้ฝึกการเขียนทุกอย่างที่เรียนมาทั้ง DOM event และ เรื่องใหม่ client storage ได้ลองโต้ตอบกับผู้ใช้ และได้รู้ว่าการเก็บข้อมูลฝั่ง client ด้วย localStorage และ cookie คืออะไรและแบบไหนมันปลอดภัยหรือเราควรเลือกเก็บข้อมูลแบบไหนที่ตอบโจทย์กับเว็บของเรา
+
+
+
+//prompt 3:(ไฟล์ cookie.html ) ให้ผู้ใช้กรอกชื่อ แล้วกดปุ่ม “บันทึกชื่อ” เก็บชื่อใน cookie ถ้ามี cookie อยู่แล้ว ให้โชว์ข้อความ “ยินดีต้อนรับกลับมา, [ชื่อผู้ใช้]!”
+เริ่มด้วย const cookies = document.cookie.split(';').map(c => c.trim());
+const nameCookie = cookies.find(c => c.startsWith('username='));  คืออ่าน cookie ทั้งหมดใน browser แล้วแยกออกเป็น array และใช้ method find() หาว่ามี cookie ที่ชื่อ username หรือไม่
+ถ้ามี cookie แล้ว แสดงข้อความต้อนรับ
+if (nameCookie) {
+  const userName = nameCookie.split('=')[1];
+  document.getElementById("greeting").textContent = `Welcome back, ${userName}!`;
+  document.getElementById("userName").style.display = "none";
+  document.getElementById("saveBtn").style.display = "none";
+}
+ถ้าไม่มี cookie ให้ผู้ใช้กรอกชื่อ
+document.getElementById("saveBtn").addEventListener("click", () => {
+  const name = document.getElementById("userName").value.trim();
+  if (name) {      //ถ้าผู้ใช้กรอกชื่อ → สร้าง cookie ชื่อ username
+    document.cookie = `username=${name}; max-age=604800; path=/`; //max-age=604800 คืออายุ 7 วันและpath=/ คือ cookie ใช้ได้ทุกหน้าในเว็บ
+    alert(`Hello ${name}!`);
+    location.reload();
+  } else {
+    alert("Please enter your name ");    //ถ้าไม่กรอก → เด้งข้อความให้กรอกก่อน
+  }
+});
+ข้อนี้ได้ฝึกใช้  DOM Manipulation ใช้ getElementById() ดึงค่า input เปลี่ยน style ของหน้าเว็บแบบ real-time และใช้ Event  ใช้ addEventListener("click", ...) กับปุ่ม ใช้ DOMContentLoaded เพื่อเริ่มทำงานหลังหน้าโหลดเสร็จ และได้ฝึกใช้ Local Storage vs Cookie localStorage คือก็บข้อมูลฝั่ง browser ไม่มีวันหมด แต่ cookie มีวันหมด, ส่งไปกับทุก request ของเว็บ
+
+
+
+
+
+
+
+
+
+

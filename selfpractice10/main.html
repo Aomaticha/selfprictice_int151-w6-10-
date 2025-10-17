@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website setting</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      padding: 20px;
+      transition: all 0.5s ease;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input, select, button {
+      margin-top: 5px;
+      padding: 6px 10px;
+      font-size: 1rem;
+    }
+
+    .buttons {
+      margin-top: 15px;
+    }
+
+    button {
+      cursor: pointer;
+      margin-right: 10px;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+    }
+
+    #saveBtn {
+      background-color: #89ec8d;
+      color: white;
+    }
+
+    #resetBtn {
+      background-color: rgb(240, 143, 143);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Website setting</h1>
+  <label for="userName">ชื่อผู้ใช้:</label>
+  <input type="text" id="userName" placeholder="กรอกชื่อของคุณ">
+  <label for="bgColor">Background Color:</label>
+  <input type="color" id="bgColor">
+
+  <label for="fontColor">Font Color:</label>
+  <input type="color" id="fontColor">
+
+  <label for="fontSize">Font Size:</label>
+  <select id="fontSize">
+    <option value="small">Small</option>
+    <option value="medium">Medium</option>
+    <option value="large">Large</option>
+  </select>
+
+  <div class="buttons">
+    <button id="saveBtn">Save Settings</button>
+    <button id="resetBtn">Reset</button>
+  </div>
+  <script src="practice10.js"></script>
+</body>
+</html>
+
